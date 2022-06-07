@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:cc="http://java.sun.com/jsf/composite/components"
+	xmlns:ch="http://java.sun.com/jsf/composite/components/highlighter"
+	xmlns:composite="http://java.sun.com/jsf/composite">
+
+<composite:interface></composite:interface>
+
+<composite:implementation>
+	<h:panelGroup layout="block" id="#{cc.attrs.id}" styleClass="scatterplot">
+			<h:outputScript >
+				var map = new INTSYS.Map(#{genreHierarchyBean.genreHierarchyAsJson}, 'mainComponent:mainComponent');
+			</h:outputScript>
+		<p:panel id="resetExplorationView" visible="false">
+			<h:outputScript>
+				map.resetMap();
+			</h:outputScript>
+		</p:panel>
+		<p:panel id="updateRecommendations" visible="false">
+			<h:outputScript>
+				map.refreshRecommendations(#{recommendationBean.recommendedArtistsAsJson}); 
+				map.refreshPreferences(#{recommendationBean.preferencedArtistsAsJson}); 
+			</h:outputScript>
+		</p:panel>
+		<p:panel id="moveToSelectedArtist" visible="false">
+			<h:outputScript>
+				function moveToArtist(){
+					map.selectCircle(#{detailsBean.currentArtist == null ? "0" : detailsBean.currentArtist.id}, true);
+				}
+			</h:outputScript>
+		</p:panel>
+		<h:panelGroup id="zoomButtons" styleClass="zoomButtonContainer" layout="block">
+		<button id="zoomInButton" class="zoomButton" onclick="map.zoomIn()">+</button>
+		<br />
+		<button id="zoomOutButton" class="zoomButton" onclick="map.zoomOut()">-</button>
+		</h:panelGroup>
+	</h:panelGroup>
+	<p:tooltip for="zoomButtons" position="top">
+		You can zoom in and out the map using these buttons. <br />
+		Alternatively, you can also use the mouse wheel. 
+	</p:tooltip>
+	<composite:insertChildren />
+</composite:implementation>
+</html>

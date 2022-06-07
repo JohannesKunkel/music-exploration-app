@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd" version="2.1">
+
+	<persistence-unit name="mapitem-pu" transaction-type="JTA">
+		<!-- <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider> -->
+		<jta-data-source>java:jboss/datasources/MusicMapItemDS</jta-data-source>
+
+		<class>info.interactivesystems.mapviews.mapitems.GenreMapItem</class>
+		<class>info.interactivesystems.mapviews.mapitems.MapItem</class>
+		<class>info.interactivesystems.mapviews.mapitems.ArtistMapItem</class>
+		<exclude-unlisted-classes>true</exclude-unlisted-classes>
+
+
+		<!-- Needed for usage of @Cachable annotation in entity-classes -->
+		<shared-cache-mode>NONE</shared-cache-mode>
+		<properties>
+			<property name="hibernate.hbm2ddl.auto" value="update" />
+			<property name="hibernate.enable_lazy_load_no_trans" value="true" />
+			<!-- <property name="hibernate.cache.region.factory_class" value="org.hibernate.cache.ehcache.EhCacheRegionFactory" /> -->
+		</properties>
+	</persistence-unit>
+	
+	<persistence-unit name="musicitem-pu" transaction-type="JTA">
+		<!-- <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider> -->
+		<jta-data-source>java:jboss/datasources/MusicItemDS</jta-data-source>
+
+		<class>info.interactivesystems.musicmap.entities.Artist</class>
+		<class>info.interactivesystems.musicmap.entities.Genre</class>
+		<class>info.interactivesystems.musicmap.entities.Image</class>
+		<class>info.interactivesystems.musicmap.entities.Playlist</class>
+		<class>info.interactivesystems.musicmap.entities.Track</class>
+
+		<exclude-unlisted-classes>true</exclude-unlisted-classes>
+
+		<!-- Needed for usage of @Cachable annotation in entity-classes -->
+		<shared-cache-mode>NONE</shared-cache-mode>
+		<properties>
+			<property name="hibernate.enable_lazy_load_no_trans" value="true" />
+			<!-- <property name="hibernate.cache.use_query_cache" value="true"/>
+			<property name="hibernate.cache.provider_class" value="org.hibernate.cache.SingletonEhCacheProvider"/>
+			<property name="hibernate.cache.region.factory_class" value="org.hibernate.cache.ehcache.EhCacheRegionFactory" /> -->
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" />
+		</properties>
+	</persistence-unit>
+</persistence>

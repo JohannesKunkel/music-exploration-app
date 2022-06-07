@@ -1,0 +1,41 @@
+.scatterplot {
+	height: 100%;
+	width: 100%;
+}
+
+.zoomButtonContainer {
+	position: absolute;
+	bottom: 15px;
+	right: 15px;
+}
+
+.zoomButton {
+	width: 30px;
+	height: 30px;
+	font-size: 1.2em;
+	border-style: solid;
+	color: #212529;
+	background-color: #90CAF9;
+	border: 1px solid #90CAF9;;
+}
+
+.zoomButton:disabled {
+	opacity: 0.6;
+	pointer-events: none;
+}
+
+.zoomButton:hover {
+	background: #6bb8f7;
+    border-color: #6bb8f7;
+    color: #212529;
+}
+
+#zoomInButton {
+	margin-bottom: 1px;
+	border-radius: 10px 10px 0px 0px;
+}
+
+#zoomOutButton {
+	margin-top: 1px;
+	border-radius: 0px 0px 10px 10px;
+}

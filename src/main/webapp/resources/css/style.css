@@ -1,0 +1,194 @@
+/* Main Page - General */
+.content {
+	position: absolute;
+	left: 0px;
+	right: 0px;
+	top: 0px;
+	height: 100%;
+}
+
+html, body {
+	padding: 0;
+	margin: 0;
+	width: 100%;
+	height: 100%;
+	font-family: Geneva, sans-serif;
+	/*overflow: hidden;*/
+	background-color: rgb(0, 0, 0);
+}
+
+.mainComponent {
+	position: fixed;
+	top: 0px;
+	width: 100%;
+	bottom: 252px;
+	overflow: hidden;
+}
+
+#hud_left_top {
+	position: absolute;
+	width: 15%; 
+	height: 15%;
+	left: 0px;
+	z-index: 2;
+}
+
+#hud_right_top {
+	position: absolute;
+	right: 0px;
+	z-index: 2;
+}
+
+#hud_middle_top {
+	position: absolute;
+	top: 0px;
+	height: 40px;
+	z-index: 2;
+	left: 20%;
+	width: 60%;
+	z-index:3;
+	background: #1e1e1e;
+	color: rgb(230, 230, 230);
+	text-align: center;
+}
+
+#hud_left_bottom {
+	position: fixed;
+	bottom: 0px;
+	left: 0px;
+	width: 20%;
+	height: 250px;
+	z-index: 2;
+	margin-bottom: 0px;
+	margin-right: 5px;
+}
+
+#hud_middle_bottom {
+	position: fixed;
+	bottom: 0px;
+	left: 20%;
+	width: 60%;
+	height: 250px;
+	z-index: 2;
+}
+
+#hud_right_bottom {
+	position: fixed;
+	bottom: 0px;
+	right: 0px;
+	width: 20%;
+	height: 250px;
+	z-index: 2;
+}
+
+.hud_lr {
+	overflow-y: scroll;
+	height: 85%;
+	position: absolute;
+	margin-bottom: 5px;
+	bottom: 0px;
+	width: 90%;
+}
+
+.hud_element {
+	background: #1e1e1e;
+	color: rgb(230, 230, 230);
+	padding: 5px;
+	border: none;
+	display: block;
+	height: 100%;
+}
+
+.hud_header {
+	font-weight: bold;
+	background: #1e1e1e;
+	color: rgb(230, 230, 230);
+	border-radius: 10px;
+	display: block;
+	padding: 5px;
+	text-align: center;
+	font-size: 1.2em;
+	margin-bottom: 5px;
+}
+
+.listImage {
+	height: 30px;
+	width: 30px;
+	padding: 0px;
+	float: left;
+	margin: 5px;
+}
+
+.listButton {
+	height: 30px !important;
+	width: 30px !important;
+}
+
+.preferredItem {
+	color: #1db954 !important;
+}
+
+.recommendedItem {
+	color: #ca00ca !important;
+}
+
+.selectedItem {
+	color: #fefefe !important;
+}
+
+#searchForm\:findArtist_input {
+	border: 1px solid #90CAF9;
+	width: 100%;
+}
+
+#searchForm\:findArtist_input:hover {
+	background-color: rgb(230, 230, 230);
+	color: #1e1e1e;
+}
+
+/* Main Page - Helpers */
+#loader {
+	width: 150px;
+	height: 200px;
+	position: absolute;
+	top: 20%;
+	left: 50%;
+	transform: translate(-50%, 0);
+}
+
+.label {
+	opacity: 0;
+	pointer-events: none;
+	font-size: 6px;
+}
+
+.center {
+	margin: 0 auto;
+}
+
+/* Primefaces */
+.ui-tooltip{
+	z-index: 5;
+}
+
+.ui-widget, .ui-widget .ui-widget {
+	font-size: 90% !important;
+}
+
+.ui-widget-content, .ui-widget-header {
+	background: none;
+	color: rgb(230, 230, 230);
+	border: none;
+}
+
+.ui-lightbox-nav-right {
+	visibility: hidden !important;
+}
+
+.ui-lightbox-nav-left {
+	visibility: hidden !important;
+}
+
+.ui-g-1, .ui-g-2, .ui-g-3, .ui-g-4, .ui-g-5, .ui-g-6, .ui-g-7, .ui-g-8, .ui-g-9, .ui-g-10, .ui-g-11, .ui-g-12 {
+	padding: 0px;
+}

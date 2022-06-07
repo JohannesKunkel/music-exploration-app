@@ -1,0 +1,21 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:cc="http://java.sun.com/jsf/composite/components"
+	template="/WEB-INF/templates/template.xhtml">
+	<ui:define name="hud-element">
+	</ui:define>
+	<ui:define name="content">
+		<cc:map_component id="mainComponent" />
+	</ui:define>
+	<ui:define name="helpContent">
+		<cc:map_help_component />	
+	</ui:define>
+	<ui:define name="hud-element">
+		<div id="hud_left_top">
+			<cc:minimap_component id="minimapComponent" />
+		</div>
+	</ui:define>	
+</ui:composition>

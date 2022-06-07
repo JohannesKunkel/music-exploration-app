@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" xmlns:cc="http://java.sun.com/jsf/composite/components" xmlns:ch="http://java.sun.com/jsf/composite/components/highlighter"
+	xmlns:composite="http://java.sun.com/jsf/composite" xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<composite:interface></composite:interface>
+
+<composite:implementation>
+	<h:panelGroup layout="inline" id="#{cc.attrs.id}">
+		<h:form id="ajaxReferenceForm"></h:form>
+		<h:panelGroup layout="block" id="updateRecommendations" styleClass="listComponent">
+			<p:accordionPanel dynamic="true" cache="true" var="superGenre" value="#{genreHierarchyBean.sortedSuperGenres}" widgetVar="superGenreWidget"
+				 activeIndex="#{userBean.activeIndex}">
+				<p:ajax form="mainComponent:ajaxReferenceForm" event="tabChange" listener="#{userBean.notifyTabChange}" />
+				<p:ajax form="mainComponent:ajaxReferenceForm" event="tabClose" listener="#{userBean.notifyTabClose}" />
+				<p:tab titleStyle="color: #{superGenre.color};">
+					<f:facet name="title">
+						<h:form style="display: inline;">
+							<h:panelGroup styleClass="header" layout="inline">
+								<h:outputText styleClass="title" value="#{genreHierarchyBean.getGenreFromMapItem(superGenre).title.toUpperCase()}" />
+							| Sample artists:
+	            			<p:repeat var="mapItem" value="#{superGenre.representatives}" varStatus="status">
+									<p:commandLink ajax="true" action="#{detailsBean.changeCurrentArtist(mapItem.userData)}"
+										update=":mainComponent:mainComponent :detailsComponent:artistInfo" onclick="event.stopPropagation();">
+			                		#{genreHierarchyBean.getArtistFromMapItem(mapItem).name}
+								</p:commandLink>
+								#{status.last? '' : ', '}
+                			</p:repeat>
+
+								<h:outputText value=" | Artists with liked songs:" rendered="#{!recommendationBean.getArtistsWithPreferencesInGenre(superGenre).isEmpty()}" />
+								<p:repeat var="artistWithPreference" value="#{recommendationBean.getArtistsWithPreferencesInGenre(superGenre)}" varStatus="status">
+									<p:commandLink ajax="true" styleClass="preferredItem" action="#{detailsBean.changeCurrentArtist(artistWithPreference.userData)}"
+										update=":mainComponent:mainComponent :detailsComponent:artistInfo" onclick="event.stopPropagation();">
+			                	#{genreHierarchyBean.getArtistFromMapItem(artistWithPreference).name}
+							</p:commandLink>
+							#{status.last?'':', '}
+						</p:repeat>
+								<h:outputText value="| Artists with recommendations:" rendered="#{!recommendationBean.getArtistsWithRecommendationInGenre(superGenre).isEmpty()}" />
+								<p:repeat var="artistWithRecommendation" value="#{recommendationBean.getArtistsWithRecommendationInGenre(superGenre)}" varStatus="status">
+									<p:commandLink ajax="true" styleClass="recommendedItem" action="#{detailsBean.changeCurrentArtist(artistWithRecommendation.userData)}"
+										update=":mainComponent:mainComponent :detailsComponent:artistInfo" onclick="event.stopPropagation();">
+			                	#{genreHierarchyBean.getArtistFromMapItem(artistWithRecommendation).name}
+							</p:commandLink>
+							#{status.last?'':', '}
+						</p:repeat>
+								<h:outputText value="| Currently selected: " styleClass="selectedItem" rendered="#{detailsBean.isCurrentArtistInGenre(superGenre)}" />
+								<h:outputText value="#{detailsBean.currentArtist.name}" styleClass="selectedItem" rendered="#{detailsBean.isCurrentArtistInGenre(superGenre)}" />
+							</h:panelGroup>
+						</h:form>
+					</f:facet>
+					<p:accordionPanel var="subGenre" dynamic="true" cache="true" value="#{genreHierarchyBean.getSortedSubGenres(superGenre)}"
+						activeIndex="#{userBean.activeSubIndex}">
+						<p:ajax form="mainComponent:ajaxReferenceForm" event="tabChange" listener="#{userBean.notifySubTabChange}" />
+						<p:ajax form="mainComponent:ajaxReferenceForm" event="tabClose" listener="#{userBean.notifySubTabClose}" />
+						<p:tab titleStyle="color: #{subGenre.color};">
+							<f:facet name="title">
+								<h:form style="display: inline;">
+									<h:panelGroup styleClass="header" layout="inline">
+										<h:outputText styleClass="title" value="#{genreHierarchyBean.getGenreFromMapItem(subGenre).title.toUpperCase()}" />
+									| Sample artists:
+	            					<p:repeat var="mapItem" value="#{subGenre.representatives}" varStatus="status">
+											<p:commandLink ajax="true" action="#{detailsBean.changeCurrentArtist(mapItem.userData)}"
+												update=":mainComponent:mainComponent :detailsComponent:artistInfo" onclick="event.stopPropagation();">
+			                				#{genreHierarchyBean.getArtistFromMapItem(mapItem).name}
+										</p:commandLink>
+										#{status.last? '' : ', '}
+                					</p:repeat>
+										<h:outputText value=" | Artists with liked songs:" rendered="#{!recommendationBean.getArtistsWithPreferencesInGenre(subGenre).isEmpty()}" />
+										<p:repeat var="artistWithPreference" value="#{recommendationBean.getArtistsWithPreferencesInGenre(subGenre)}" varStatus="status">
+											<p:commandLink ajax="true" styleClass="preferredItem" action="#{detailsBean.changeCurrentArtist(artistWithPreference.userData)}"
+												update=":mainComponent:mainComponent :detailsComponent:artistInfo" onclick="event.stopPropagation();">
+			                	#{genreHierarchyBean.getArtistFromMapItem(artistWithPreference).name}
+							</p:commandLink>
+							#{status.last?'':', '}
+						</p:repeat>
+										<h:outputText value="| Artists with recommendations:" rendered="#{!recommendationBean.getArtistsWithRecommendationInGenre(subGenre).isEmpty()}" />
+										<p:repeat var="artistWithRecommendation" value="#{recommendationBean.getArtistsWithRecommendationInGenre(subGenre)}" varStatus="status">
+											<p:commandLink ajax="true" styleClass="recommendedItem" action="#{detailsBean.changeCurrentArtist(artistWithRecommendation.userData)}"
+												update=":mainComponent:mainComponent :detailsComponent:artistInfo" onclick="event.stopPropagation();">
+			                	#{genreHierarchyBean.getArtistFromMapItem(artistWithRecommendation).name}
+							</p:commandLink>
+							#{status.last?'':', '}
+						</p:repeat>
+										<h:outputText value=" | Currently selected: " styleClass="selectedItem" rendered="#{detailsBean.isCurrentArtistInGenre(subGenre)}" />
+										<h:outputText value="#{detailsBean.currentArtist.name}" styleClass="selectedItem" rendered="#{detailsBean.isCurrentArtistInGenre(subGenre)}" />
+									</h:panelGroup>
+								</h:form>
+							</f:facet>
+							<h:form style="display: inline;">
+								<p:repeat var="artist" value="#{genreHierarchyBean.getSortedArtistsForGenre(subGenre)}">
+									<p:commandLink ajax="true" action="#{detailsBean.changeCurrentArtist(artist.userData)}" update=":mainComponent:mainComponent :detailsComponent">
+										<h:outputText
+											styleClass="#{detailsBean.currentArtist.equals(artist.userData) ? 'selectedItem' : recommendationBean.isPreference(artist.userData) ? 'preferredItem' : recommendationBean.isRecommendation(artist.userData) ? 'recommendedItem' : 'listElement'}"
+											value="#{genreHierarchyBean.getArtistFromMapItem(artist).name}" />
+										<h:outputText value=" (Liked)" styleClass="preferredItem" rendered="#{recommendationBean.isPreference(artist.userData)}" />
+										<h:outputText value=" (Recommended)" styleClass="recommendedItem" rendered="#{recommendationBean.isRecommendation(artist.userData)}" />
+										<h:outputText value=" (Selected)" styleClass="selectedItem" rendered="#{detailsBean.currentArtist.equals(artist.userData)}" />
+										<br />
+									</p:commandLink>
+								</p:repeat>
+							</h:form>
+						</p:tab>
+					</p:accordionPanel>
+				</p:tab>
+			</p:accordionPanel>
+		</h:panelGroup>
+	</h:panelGroup>
+	<p:panel id="resetExplorationView" visible="false">
+			<h:outputScript>
+				if(jQuery.isReady){
+					PF('superGenreWidget').unselectAll();
+				}
+			</h:outputScript>
+	</p:panel>
+	<p:panel id="moveToSelectedArtist" visible="false">
+		<h:outputScript>
+			function moveToArtist(){
+				updateMainComponent();
+				var firstSelectedElement = $(".selectedItem")[0];
+				var secondSelectedElement = $(".selectedItem")[1];
+				if(firstSelectedElement){
+					var scrollGoal = secondSelectedElement ? 
+						Math.round(firstSelectedElement.getBoundingClientRect().top + secondSelectedElement.getBoundingClientRect().top / 2) : 
+						firstSelectedElement.getBoundingClientRect().top;
+					document.getElementById("mainComponent:updateRecommendations").scrollTo({
+	  					top: scrollGoal,
+	  					left: 0,
+	  					behavior: 'smooth'
+					});
+				}
+			}
+		</h:outputScript>
+	</p:panel>
+	<composite:insertChildren />
+</composite:implementation>
+</html>

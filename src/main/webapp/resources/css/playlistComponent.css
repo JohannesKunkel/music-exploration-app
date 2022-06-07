@@ -1,0 +1,14 @@
+#playlistComponent {
+	margin-bottom: 0px;
+	margin-right: 5px;
+}
+
+#playlistComponent ul {
+	width: 100%;
+}
+
+/* Primefaces */
+
+#playlistComponent .ui-orderlist {
+	width: 100%;
+}

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" xmlns:cc="http://java.sun.com/jsf/composite/components" xmlns:composite="http://java.sun.com/jsf/composite" xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<composite:interface></composite:interface>
+
+<composite:implementation>
+	<span id="#{cc.clientId}" class="hud_element"> 
+		<h:panelGroup id="artistInfo" styleClass="artistInfo" layout="block">
+			<h:form id="artistForm" rendered="#{detailsBean.currentArtist != null}">
+				<div id="info">
+				<span class="detailsTitle">Currently selected: #{detailsBean.currentArtist.name}</span>
+					<img src="/artist_images/#{detailsBean.currentArtist.spotifyId}_l.jpg" class="detailsImage" />
+					<span class="infoLabel">Genres: </span> <ui:repeat var="genre" value="#{detailsBean.currentArtistsGenres}" varStatus="loop">#{genre}#{not loop.last ? ', ' : ''}</ui:repeat>
+				</div>
+				<h:panelGroup id="artist_top_tracks"><span class="infoLabel detailsTitle_s" style="padding-top: 10px;">Artist's top tracks:</span></h:panelGroup>
+				<p:tooltip for="artist_top_tracks" position="top">
+					The list below represents the 10 most popular songs of this artist.
+				</p:tooltip>
+				<div id="artistTopTracks">
+					<table>
+						<ui:repeat value="#{detailsBean.currentArtistsTracks}" var="track">
+							<tr>
+								<td>
+									<p:commandLink ajax="true" action="#{detailsBean.changeCurrentTrack(track)}" onstart="sendLogMessage(INTSYS.CONS.LOG_TYPE_DETAILS_VIEW_CLICK, '#{track.uri}', 'spotifyUri');" update=":detailsComponent:currentTrackInfo :growl" disabled="#{!musicPlayerBean.deviceReady}">
+										<img src="/track_images/#{track.spotifyId}_l.jpg" class="listImage" />
+									</p:commandLink>
+								</td>
+								<td>
+									<p:commandLink ajax="true" styleClass="#{recommendationBean.isPreference(track) ? 'preferredItem' : recommendationBean.isRecommendation(track) ? 'recommendedItem' : ''}" action="#{detailsBean.changeCurrentTrack(track)}" onstart="sendLogMessage(INTSYS.CONS.LOG_TYPE_DETAILS_VIEW_CLICK, '#{track.uri}', 'spotifyUri');" update=":detailsComponent:currentTrackInfo :growl" disabled="#{!musicPlayerBean.deviceReady}">
+										<h:outputText value="#{track.title.length() gt 100 ? track.title.substring(0,97).concat('...') : track.title}" />
+										<h:outputText value=" (Liked)" rendered="#{recommendationBean.isPreference(track)}" />
+										<h:outputText value=" (Recommended)" rendered="#{recommendationBean.isRecommendation(track)}" />
+									</p:commandLink>
+								</td>
+							</tr>
+						</ui:repeat>
+					</table>
+	        	</div>
+			</h:form>
+		</h:panelGroup>
+		<h:panelGroup id="currentTrackInfo" layout="block">
+			<h:form id="detailsForm" rendered="#{detailsBean.currentTrack != null}">
+				<div id="playSongOverlay" class="loadingOverlay">
+					<div class="loader"></div>
+				</div>
+				<div class="trackInfo">
+					<img src="/track_images/#{detailsBean.currentTrack.spotifyId}_l.jpg" class="detailsImage_s" />
+					<span class="detailsTitle_s">
+						 <ui:repeat var="artist" value="#{detailsBean.currentTracksArtistsAsList}" varStatus="loop">
+							<p:commandLink ajax="true" action="#{detailsBean.changeCurrentArtistFromTrack(artist)}" onstart="sendLogMessage(INTSYS.CONS.LOG_TYPE_DETAILS_VIEW_CLICK, '#{artist.uri}', 'spotifyUri');" update=":detailsComponent:artistInfo :mainComponent:moveToSelectedArtist" onclick="event.stopPropagation();" oncomplete="moveToArtist()">
+			                	#{artist.name}
+							</p:commandLink> 
+						 	#{not loop.last ? ' and ' : ''}
+						 </ui:repeat>
+						<h:outputText value=" - #{detailsBean.currentTrack.title.length() gt 30 ? detailsBean.currentTrack.title.substring(0,27).concat('...') : detailsBean.currentTrack.title}" />
+				 </span>
+					<h:panelGroup id="add_to_playlist"><p:commandButton action="#{playlistBean.addCurrentTrack()}" icon="pi pi-plus-circle" styleClass="rounded-button" ajax="true" update="@this :playlistComponent" disabled="#{playlistBean.isTrackOnPlaylist(detailsBean.currentTrack)}"/></h:panelGroup>
+					<h:panelGroup id="like_song"><p:commandButton action="#{detailsBean.toggleLiked()}" icon="pi pi-thumbs-up" styleClass="rounded-button #{detailsBean.preference ? 'liked' : ''}" onstart="$('#recommendationOverlay').show();"
+						oncomplete="$('#recommendationOverlay').hide()" ajax="true" update="@this :detailsComponent:artistInfo :recommenderComponent :mainComponent:updateRecommendations" /></h:panelGroup>
+				</div>
+				<p:tooltip for="add_to_playlist" position="top">
+						Click this button to add the current song to your playlist.<br />
+						A song can only be added once.
+				</p:tooltip>
+				<p:tooltip for="like_song" position="top">
+					Click this button to like/unlike the current song.<br />
+					This will result in an immediate recalculation of your recommendations.
+				</p:tooltip>
+				<h:panelGroup id="trackProgress" layout="block" rendered="#{musicPlayerBean.currentSpotifyTrack != null}">
+						<p:commandButton id="playButton" action="#{musicPlayerBean.resumePlayback()}" icon="pi pi-play" onstart="sendLogMessage(INTSYS.CONS.LOG_TYPE_DETAILS_VIEW_CLICK, 'resume song');" styleClass="rounded-button playPauseButton" rendered="#{!musicPlayerBean.playing}" disabled="#{!musicPlayerBean.deviceReady}" update=":growl" />
+						<p:commandButton id="pauseButton" action="#{musicPlayerBean.pausePlayback()}" icon="pi pi-pause" styleClass="rounded-button playPauseButton" onstart="sendLogMessage(INTSYS.CONS.LOG_TYPE_DETAILS_VIEW_CLICK, 'pause song');" onclick="stopPositionInterval()" ajax="true" rendered="#{musicPlayerBean.playing}" update="@form :growl"/>
+						<h:panelGrid id="trackProgressSlider" columns="3" columnClasses="timeText, progressBar, timeText">
+	            		<h:outputText id="trackPositionText" value="#{musicPlayerBean.formattedCurrentTrackPosition}" />
+	            		<p:slider id="trackPositionSlider" for="trackPosition" onSlideStart="sendLogMessage(INTSYS.CONS.LOG_TYPE_DETAILS_VIEW_CLICK, 'seek in song'); onSlideStart();" disabled="#{!musicPlayerBean.deviceReady}">
+							<p:ajax event="slideEnd" listener="#{musicPlayerBean.changeCurrentTrackPositionBySlider}" oncomplete="onSlideEnd()" update="trackPositionText :growl" />
+						</p:slider>
+	            		<h:outputText value="#{musicPlayerBean.totalTrackDuration}" />
+						</h:panelGrid>
+						<p:inputText id="trackPosition" styleClass="invisible" value="#{musicPlayerBean.currentPositionPercent}"/>
+				</h:panelGroup>		
+			</h:form>
+		</h:panelGroup>		
+	</span>
+</composite:implementation>
+</html>

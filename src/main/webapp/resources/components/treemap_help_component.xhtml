@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" xmlns:cc="http://java.sun.com/jsf/composite/components" xmlns:composite="http://java.sun.com/jsf/composite" xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<composite:interface></composite:interface>
+
+<composite:implementation>
+	<p>The following screenshot shows the main view of the MusicExplorationApp. It basically consists of four components: <span class="emph">exploration area</span>, <span class="emph">details area</span>, <span class="emph">recommendations</span>, and <span class="emph">playlist</span>.</p>
+	<br />
+	<h:graphicImage value="/resources/img/treemap-view-main.png" styleClass="helpDialogImage" />
+
+	<h2>Exploration area</h2>
+	<p>The central part of the application is the exploration area. Here you can see 13 top-level genres, such as pop, classical, and hip hop. Each genre is displayed as a 
+	tile, the size of which indicates the number of artists that belong to that particular genre. Hence, genres that cover a large space (e.g. electronic) contain many more artists 
+	than genres that cover a smaller space (e.g. classical). Please note that the dataset of this application (with about 9000 artists in total) is only a subset of the 
+	entire musical diversity available on Spotify.</p>
+	<p>For each genre, two sample artists are being displayed. These artists are particularly representative for the given genre. In case you have already selected an artist to be 
+	displayed in the details area (see below), they are also displayed next to their genre. Apart from browsing artists by their genre, you can also search for a particular artist 
+	using the search bar in the upper right corner.</p>
+	<h:graphicImage value="/resources/img/treemap-view-sub0.png" styleClass="helpDialogImage" />
+
+	<p>When you click on a genre tile, it gets maximized. Then you can explore its subgenres, which are also displayed as tiles. The size of each tile represents the ratio between 
+	the number of artists of this subgenre and the number of all the artists belonging to the corresponding supergenre. Again, you will be shown two representative sample artists.</p>
+	<p>Besides the two sample artists, you can also explore the entire list of artists associated with each subgenre. This list is sorted alphabetically.</p>
+	<h:graphicImage value="/resources/img/treemap-view-sub1.png" styleClass="helpDialogImage" />
+
+	<p>In this view you have different options for interaction. You can:</p>
+	<ul>
+	<li>Select artists by clicking on them to see further details in the details area (see below).</li>
+	<li>Scroll through the entire list of artists by using the mouse wheel inside the tile of a genre.</li>
+	<li>Move up a level by clicking on the headline, thus returning to the top-level genres.</li>
+	</ul>
+	<h:graphicImage value="/resources/img/treemap-view-sub1-interaction.png" styleClass="helpDialogImage" />
+		
+	<h2>Details area</h2>
+	<p>The details area consists of two parts: your currently selected artists and your currently selected song:</p>
+	<h:graphicImage value="/resources/img/details-view-full.png" styleClass="helpDialogImage" />
+	
+	<h3>Currently selected artist</h3>
+	<p>Here you find the artist you have previously selected. The given information for each artist is:</p>
+	<ul>
+	<li>Image: The picture that is saved for this artist at Spotify.</li>
+	<li>Genres: A list of genres based on Spotify’s metadata for the current artist.</li>
+	<li>Artist’s top tracks: A list of the 10 most popular tracks by this artist. This list is sorted in decreasing order of popularity. When you click on one of the songs, 
+	it will be displayed in the area for the currently selected song.</li>
+	</ul>
+	<h:graphicImage value="/resources/img/details-view-selected-artist.png" styleClass="helpDialogImage" />
+	<br />
+	<h3>Currently selected song</h3>
+	<p>Here you find the song you have selected. Besides the controls for playing, pausing, and changing the song position, you also find two buttons at the bottom of this view: 
+	the add-to-playlist button and the like button.</p>
+	<h:graphicImage value="/resources/img/details-view-selected-song.png" styleClass="helpDialogImage" />
+		
+	<h4>Add-to-playlist button</h4>
+	<p>When you click this button, you add the currently selected song to the playlist in the playlist area (see below). Each song can only be added once to the playlist. Adding 
+	a song <span class="emph">does not influence your recommendations</span> nor will it have any impact on your Spotify account.</p>
+	
+	<h4>Like button</h4>
+	<p>When you click this button, you express that you like the currently selected song. You can remove this like by clicking the button again. Either way, clicking this button will trigger 
+	an immediate recalculation of your personal recommendations (see below). This will <span class="emph">not influence your Spotify account</span> and your liked songs there.</p>
+
+	<h2>Playlist area</h2>
+	<p>This area contains all the songs that you have previously added to the palylist using the add-to-playlist button. In case you want to remove a song, click the "x" button next to 
+	to the song in the playlist. This MusicExplorationApp playlist is independent of any playlists that may be stored in your Spotify account.</p>
+	<h:graphicImage value="/resources/img/details-view-playlist.png" styleClass="helpDialogImage" />
+	
+	<h2>Recommendation area</h2>
+	<p>As soon as you have liked at least one song during your interaction with the MusicExplorationApp, you will find a list of personalized song recommendations in the recommendation area. 
+	Recommendations are only influenced by the likes you express in this interface. Neither your likes (heart icon) within Spotify, nor the songs on your playlist, nor the 
+	songs you've listened to will affect your recommendations.</p>
+	<h:graphicImage value="/resources/img/details-view-recommendations.png" styleClass="helpDialogImage" />
+	
+	<p>By clicking on one of your recommendations, it will be displayed in the area for the currently selected song. Apart from displaying it there, artists with liked or recommended songs 
+	are also shown in the main exploration area. Liked artists appear in <span class="preferredItem">green color</span>, recommended artists appear in <span class="recommendedItem">fuchsia color</span>. </p>
+	<h:graphicImage value="/resources/img/treemap-view-recommendations.png" styleClass="helpDialogImage" />
+</composite:implementation>
+</html>

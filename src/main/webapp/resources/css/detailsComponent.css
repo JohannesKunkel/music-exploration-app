@@ -1,0 +1,154 @@
+#detailsComponent {
+	position: absolute;
+	bottom: 0px;
+	width: 100%;
+	border-left: none;
+	border-right: none;
+	margin-left: 1px;
+	border-bottom: none;
+	margin-bottom: 0px;
+}
+
+.loadingOverlay {
+	width: 100%;
+	height: 100%;
+	background: #2F2F2FB0;
+	position: absolute;
+	z-index: 1;
+	display: none;
+}
+
+#detailsComponent .artistInfo {
+	border-color: #383838;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	padding-bottom: 5px;
+	margin-bottom: 5px;
+	height: 160px;
+}
+
+#detailsComponent #info {
+	float: left;
+	width: 35%;
+	font-size: .9em;
+}
+
+#detailsComponent .infoLabel {
+	font-weight: bold;
+}
+
+#detailsComponent #artistTopTracks {
+	height: 125px;
+	overflow-y: scroll;
+	background-color: #101010;
+}
+
+#detailsComponent .detailsTitle {
+	font-weight: bold;
+	background: #1e1e1e;
+	color: rgb(230, 230, 230);
+	border-radius: 10px;
+	display: block;
+	padding: 5px;
+	font-size: 1.1em;
+	margin-bottom: 5px;
+}
+
+#detailsComponent .detailsTitle_s {
+	font-weight: bold;
+	background: #1e1e1e;
+	color: rgb(230, 230, 230);
+	display: block;
+	font-size: 0.8em;
+	margin-bottom: 5px;
+}
+
+#detailsComponent .detailsImage {
+	height: 100px;
+	width: auto;
+	padding-right: 5px;
+	float: left;
+}
+
+#detailsComponent .detailsImage_s {
+	height: 70px;
+	width: auto;
+	padding-right: 5px;
+	float: left;
+}
+
+#detailsComponent .topTrackItem {
+	text-align: center;
+	border: none;
+}
+
+#detailsComponent .topTrackImg {
+	width: 80px;
+	height: 80px;
+	float: none;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#detailsComponent .trackInfo {
+	width: 40%;
+	height: 70px;
+	float: left;
+	border: none;
+}
+
+#detailsComponent\:currentTrackInfo {
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+
+#detailsComponent .info .ui-button {
+	margin: 2px;
+}
+
+#detailsComponent .liked {
+	border: solid 1px aliceblue;
+	background-color: #1db954;
+}
+
+#detailsComponent\:detailsForm\:trackProgress {
+	width: 60%;
+	float: right;
+}
+
+#detailsComponent\:detailsForm\:trackProgress .ui-icon {
+	font-size: 30px;
+	margin-top: -14px;
+	margin-left: -12px;
+}
+
+#detailsComponent .invisible {
+	visibility: hidden;
+}
+
+#detailsComponent .timeText {
+	width: 10%;
+	text-align: center;
+}
+
+#detailsComponent .progressBar {
+	width: 80%;
+}
+
+#detailsComponent\:detailsForm\:trackProgressSlider {
+	width: 90%;
+}
+
+#detailsComponent .playPauseButton {
+	left: 50%;
+	-ms-transform: translateX(-50%);
+	transform: translateX(-50%);
+	width: 40px;
+	height: 40px;
+}
+
+#detailsComponent .pi-pause {
+	margin-left: -15px;
+	font-weight: bold;
+}

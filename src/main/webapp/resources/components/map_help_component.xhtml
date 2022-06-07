@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" xmlns:cc="http://java.sun.com/jsf/composite/components" xmlns:composite="http://java.sun.com/jsf/composite" xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<composite:interface></composite:interface>
+
+<composite:implementation>
+	<p>The following screenshot shows the main view of the MusicExplorationApp. It basically consists of four components: <span class="emph">exploration area</span>, <span class="emph">details area</span>, <span class="emph">recommendations</span>, and <span class="emph">playlist</span>.</p>
+	<br />
+	<h:graphicImage value="/resources/img/map-view-main.png" styleClass="helpDialogImage" />
+
+	<h2>Exploration area</h2>
+	<p>The central part of the application is the exploration area, in which you can find about 9000 artists distributed on a two-dimensional map. How these artists are positioned depends 
+	on various factors such as the genres they are assigned with or the audio features of their songs (Spotify provides several such features, e.g. how 'danceable' a song is). This results in 
+	a distribution of artists where <span class="emph">artists that are located close to each other are very similar, while artists that are displayed far apart have very little in common</span>.</p> 
+	
+	<p>Not all artists are visible all the time, though. Instead, two hierarchical levels of genres are used to represent the artists located in that area of the map. Each genre is 
+	positioned depending on the positions of the artists assigned to it. Two sample artists are also displayed for each genre. These artists are representative for the genre in question. 
+	The color of the artist’s dot indicates to which genre it belongs. When you launch the application for the first time, 13 top-level genres are displayed. For your orientation, you 
+	also find a <span class="emph">minimap in the upper left corner</span>. It also shows the 13 top-level genres along with the part of the map currently viseble to you (as soon as you zoom in).</p>
+	<h:graphicImage value="/resources/img/map-view-sub0.png" styleClass="helpDialogImage" />
+	
+	<p>To explore the space of artists and their music, you have four main tools for interaction:</p>
+	<ul>
+		<li>Selecting an artist by clicking on their dot or label to show them in the details view (see below).</li>
+		<li>Searching for an artist using the search bar in the upper right corner.</li>
+		<li>Panning the map by clicking and holding the left mouse button.</li>
+		<li>Zooming in and out by using the mouse wheel or by clicking the buttons in the lower right corner of the map.</li>
+	</ul>
+	<h:graphicImage value="/resources/img/map-view-sub0-interaction.png" styleClass="helpDialogImage" />
+	
+	<p>While you use the zoom function, you will notice that as you zoom in, further genres become visible. These are subgenres of the 13 top-level genres (e.g. Contemporary Classical 
+	is a subgenre of Classical). These subgenres have the same color as the corresponding supergenre. Like the supergenre, each subgenre has two representative artists. Notice that you 
+	can now also see how the rectangle in the minimap shows your current view onto the large map. By clicking inside the minimap, you can reposition this view.</p>
+	<h:graphicImage value="/resources/img/map-view-sub1.png" styleClass="helpDialogImage" />
+	
+	<p>If you zoom in further, you will eventually see all the artists in one area. Note that the names of artists that are very similar to each other may overlap. This issue 
+	will most likely be fixed if you zoom in even further. In addition, you can click on one of these artists to see their details in the details view.</p>
+	<h:graphicImage value="/resources/img/map-view-sub2.png" styleClass="helpDialogImage" />
+	
+	<p>When you zoom out again, artists and subgenres are gradually hidden until you reach the highest available zoom level again. Regardless of the current zoom level, you can always 
+	use the pan function to explore the surrounding area.</p>
+	
+	<h2>Details area</h2>
+	<p>The details area consists of two parts: your currently selected artists and your currently selected song:</p>
+	<h:graphicImage value="/resources/img/details-view-full.png" styleClass="helpDialogImage" />
+	
+	<h3>Currently selected artist</h3>
+	<p>Here you find the artist you have previously selected (either by clicking on their dot or by using the search bar). The given information for each artist is:</p>
+	<ul>
+	<li>Image: The picture that is saved for this artist at Spotify.</li>
+	<li>Genres: A list of genres based on Spotify’s metadata for the current artist.</li>
+	<li>Artist’s top tracks: A list of the 10 most popular tracks by this artist. This list is sorted in decreasing order of popularity. When you click on one of the songs, 
+	it will be displayed in the area for the currently selected song.</li>
+	</ul>
+	<h:graphicImage value="/resources/img/details-view-selected-artist.png" styleClass="helpDialogImage" />
+	<br />
+	<h3>Currently selected song</h3>
+	<p>Here you find the song you have selected. Besides the controls for playing, pausing, and changing the song position, you also find two buttons at the bottom of this view: 
+	the add-to-playlist button and the like button.</p>
+	<h:graphicImage value="/resources/img/details-view-selected-song.png" styleClass="helpDialogImage" />
+		
+	<h4>Add-to-playlist button</h4>
+	<p>When you click this button, you add the currently selected song to the playlist in the playlist area (see below). Each song can only be added once to the playlist. Adding 
+	a song <span class="emph">does not influence your recommendations</span> nor will it have any impact on your Spotify account.</p>
+	
+	<h4>Like button</h4>
+	<p>When you click this button, you express that you like the currently selected song. You can remove this like by clicking the button again. Either way, clicking this button will trigger 
+	an immediate recalculation of your personal recommendations (see below). This will <span class="emph">not influence your Spotify account</span> and your liked songs there.</p>
+
+	<h2>Playlist area</h2>
+	<p>This area contains all the songs that you have previously added to the palylist using the add-to-playlist button. In case you want to remove a song, click the "x" button next to 
+	to the song in the playlist. This MusicExplorationApp playlist is independent of any playlists that may be stored in your Spotify account.</p>
+	<h:graphicImage value="/resources/img/details-view-playlist.png" styleClass="helpDialogImage" />
+	
+	<h2>Recommendation area</h2>
+	<p>As soon as you have liked at least one song during your interaction with the MusicExplorationApp, you will find a list of personalized song recommendations in the recommendation area. 
+	Recommendations are only influenced by the likes you express in this interface. Neither your likes (heart icon) within Spotify, nor the songs on your playlist, nor the 
+	songs you've listened to will affect your recommendations.</p>
+	<h:graphicImage value="/resources/img/details-view-recommendations.png" styleClass="helpDialogImage" />
+	
+	<p>By clicking on one of your recommendations, it will be displayed in the area for the currently selected song. Apart from displaying it there, artists with liked or recommended songs 
+	are also shown in the main exploration area. Liked artists appear in <span class="preferredItem">green color</span>, recommended artists appear in <span class="recommendedItem">fuchsia color</span>. </p>
+	<h:graphicImage value="/resources/img/map-view-recommendations.png" styleClass="helpDialogImage" />
+		
+</composite:implementation>
+</html>

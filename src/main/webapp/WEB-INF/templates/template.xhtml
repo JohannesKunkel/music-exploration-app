@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui" xmlns:cc="http://java.sun.com/jsf/composite/components">
+<h:head>
+	<title>MusicExplorationApp</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+	<h:outputScript name="js/lib/d3.js"></h:outputScript>
+	<h:outputScript name="js/lib/three-v118.js"></h:outputScript>
+	<h:outputScript name="js/lib/camera-controls.js"></h:outputScript>
+	<h:outputScript name="js/lib/sprite-text.js"></h:outputScript>
+	<h:outputScript name="js/lib/threex.domevents.js"></h:outputScript>
+	<h:outputScript name="js/lib/hull.js"></h:outputScript>
+	<h:outputScript name="js/lib/bufferGeometryUtils.js"></h:outputScript>
+	<h:outputScript name="js/constants.js"></h:outputScript>
+	<h:outputScript name="js/d3Utils.js"></h:outputScript>
+	<h:outputScript name="js/spotifyPlayer.js"></h:outputScript>
+	<h:outputScript name="js/utils.js"></h:outputScript>
+	<h:outputScript name="js/Map.js"></h:outputScript>
+	<h:outputScript name="js/Treemap.js"></h:outputScript>
+	<h:outputScript name="js/playButtonUtils.js"></h:outputScript>
+	<h:outputScript name="js/MiniMap.js"></h:outputScript>
+	<h:outputScript name="js/lib/spotify-player.js" target="body" />
+	<h:outputScript>
+		window.onSpotifyWebPlaybackSDKReady = function(){
+			new INTSYS.SpotifyPlayer('#{spotifyUtils.accessToken}') 
+		};
+	</h:outputScript>
+	<ui:insert name="customhead" />
+</h:head>
+<h:body>
+	<h:outputStylesheet name="css/style.css" />
+	<h:outputStylesheet name="css/listComponent.css" />
+	<h:outputStylesheet name="css/treemapComponent.css" />
+	<h:outputStylesheet name="css/mapComponent.css" />
+	<h:outputStylesheet name="css/detailsComponent.css" />
+	<h:outputStylesheet name="css/recommenderComponent.css" />
+	<h:outputStylesheet name="css/playlistComponent.css" />
+	<h:outputStylesheet name="css/loader.css" />
+	<h:outputStylesheet name="css/helpDialog.css" />
+	<h:outputStylesheet name="css/minimapComponent.css" />
+
+	<p:panel visible="false" rendered="#{imageCache.ready}"></p:panel>
+	<h:form id="homeForm">
+		<p:remoteCommand name="showArtist" actionListener="#{detailsBean.changeCurrentArtist}" update=":detailsComponent:artistInfo" />
+		<p:remoteCommand name="unregisterWebPlayer" actionListener="#{musicPlayerBean.unregisterWebPlayer}" update="detailsComponent playlistComponent recommenderComponent"/>
+		<p:remoteCommand name="registerWebPlayer" actionListener="#{musicPlayerBean.registerWebPlayer}" update="detailsComponent playlistComponent recommenderComponent" />
+		<p:remoteCommand name="updateTrackPosition" actionListener="#{musicPlayerBean.updateTimeMilies()}" update="detailsComponent:detailsForm:trackProgress" />
+		<p:remoteCommand name="updateMainComponent" update=":mainComponent:mainComponent" />
+	</h:form>
+	<h:panelGroup id="content" display="block" styleClass="content">
+		<p:growl id="growl" showDetail="true" />
+		<h:panelGroup styleClass="mainComponent">
+			<ui:insert name="content">
+				Main Content
+			</ui:insert>
+		</h:panelGroup>
+		<div id="hud_right_top">
+		<h:form id="searchForm" rendered="#{searchArtistBean.searchBeanReady}">
+			<p:autoComplete style="width:220px; margin-right:10px;" id="findArtist" value="#{searchAutoCompletionBean.searchText}" completeMethod="#{searchAutoCompletionBean.completeTrack}" minQueryLength="3" placeholder="Type to search for an artist" cache="true" emptyMessage="We are sorry, there is no such artist in our database.">
+            		<p:ajax event="itemSelect" listener="#{searchAutoCompletionBean.onItemSelect}" update=":detailsComponent :mainComponent:moveToSelectedArtist" oncomplete="moveToArtist()" />
+        	</p:autoComplete>
+			<p:commandButton value="Help" type="button" icon="pi pi-external-link" onclick="PF('helpDialog').show()"/>
+		</h:form>
+		</div>
+		<div id="hud_left_bottom">
+			<cc:playlist_component id="playlistComponent" />
+		</div>
+		<div id="hud_middle_bottom">
+			<cc:details_component id="detailsComponent" />
+		</div>
+		<div id="hud_right_bottom">
+			<cc:recommender_component id="recommenderComponent" />
+		</div>
+		<ui:insert name="hud-element" />
+	</h:panelGroup>
+	<div style="clear: both" />
+	<p:dialog id="helpDialog" header="Users Manual" widgetVar="helpDialog" minHeight="500" width="90%" showEffect="fade" hideEffect="fade" modal="true" draggable="false" resizable="false" style="overflow-y:scroll;" onShow="resizeDialogHeight()">
+    	<ui:insert name="helpContent">
+    		Help Content
+    	</ui:insert>
+	</p:dialog>
+</h:body>
+</html>
