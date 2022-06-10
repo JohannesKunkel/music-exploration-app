@@ -3,6 +3,6 @@ Recommender systems, like the one Spotify uses, tend to be opaque and don’t sh
 
 To tackle this, I present the MusicExplorationApp. This web application uses a map metaphor to show users where their preferences and recommendations are located on a map of music. In addition, this map can be used to explore a space of about 9 000 artists.
 
-[![NewsViz video](https://img.youtube.com/vi/chKq1_lxePM/maxresdefault.jpg)](https://youtu.be/chKq1_lxePM)
+[![MusicExplorationApp video](https://img.youtube.com/vi/chKq1_lxePM/maxresdefault.jpg)](https://youtu.be/chKq1_lxePM)
 
-This project is licensed under the terms of the MIT license.
+*This project is licensed under the terms of the MIT license.*
