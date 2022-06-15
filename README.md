@@ -5,4 +5,8 @@ To tackle this, I present the MusicExplorationApp. This web application uses a m
 
 [![MusicExplorationApp video](https://img.youtube.com/vi/chKq1_lxePM/maxresdefault.jpg)](https://youtu.be/chKq1_lxePM)
 
+A journal article about the MusicExplorationApp and a user study we conducted is currently under review. The supplementary material of this experiment can be found at:
+
+Kunkel, Johannes; Ziegler, Jürgen (2022), “Supplementary Material for: “A Comparative Study of Item Space  Visualizations for Recommender Systems””, Mendeley Data, V2, http://dx.doi.org/10.17632/hw39d5kxs6.2
+
 *This project is licensed under the terms of the MIT license.*
